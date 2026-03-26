@@ -161,8 +161,13 @@ begin
     end else
     begin
       Comando := Comando.Replace('''','"');
-      for var I :=  1 to High(Parans) do
+      for var I := 1 to High(Parans) do
         Comando := Comando.Replace('%'+I.ToString,Parans[I]);
+
+      if Comando.Contains('%') then begin
+        for var I := 1 to 10 do
+          Comando := Comando.Replace('%'+I.ToString,'').Replace('"%'+I.ToString+'"','');
+      end;
 
       Writeln('Comando: '+Comando);
       ExecutarComandoWait(Comando);
@@ -182,7 +187,7 @@ begin
     ListaComandos();
     Exit;
   end;
-
+                ParamStr
   if ParamStr(1).ToLower = 'add' then
   begin
     AdicionarComando;
